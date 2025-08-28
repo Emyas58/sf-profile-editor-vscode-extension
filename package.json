@@ -1,0 +1,97 @@
+{
+  "name": "sf-profile-editor",
+  "displayName": "SF Profile Editor",
+  "description": "Tool to view Profile Structure and add Tags (Layout Assignments) based on your repository",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "profile-editor",
+          "title": "Profile Editor",
+          "icon": "media/profile-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "profile-editor": [
+        {
+          "id": "profile-list",
+          "name": "Profiles"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "profile-list.reload",
+        "title": "Reload Profiles",
+        "icon": {
+          "light": "media/refresh.png",
+          "dark": "media/refresh.png"
+        }
+      },
+      {
+        "command": "profile.open",
+        "title": "Open Profile"
+      },
+      {
+        "command": "profile-item.open",
+        "title": "Open Profile Item"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "profile-list.reload",
+          "when": "view == profile-list",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "profile.open",
+          "when": "viewItem == profile",
+          "group": "inline"
+        },
+        {
+          "command": "profile-item.open",
+          "when": "viewItem == profile-item",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.99.0",
+    "@types/xml2js": "^0.4.14",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.32.0",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "xml2js": "^0.6.2"
+  }
+}

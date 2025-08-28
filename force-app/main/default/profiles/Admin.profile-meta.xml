@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admin</fullName>
+    <description>System Administrator profile</description>
+    
+    <applicationVisibilities>
+        <application>standard__Sales</application>
+        <default>true</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    
+    <applicationVisibilities>
+        <application>standard__Service</application>
+        <default>true</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    
+    <classAccesses>
+        <apexClass>TestClass</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    
+    <classAccesses>
+        <apexClass>UtilityClass</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Name</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Email</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <layoutAssignments>
+        <layout>Account-Account Layout</layout>
+    </layoutAssignments>
+    
+    <layoutAssignments>
+        <layout>Account-Customer Account Layout</layout>
+        <recordType>Account.Customer</recordType>
+    </layoutAssignments>
+    
+    <layoutAssignments>
+        <layout>Account-Partner Account Layout</layout>
+        <recordType>Account.Partner</recordType>
+    </layoutAssignments>
+    
+    <layoutAssignments>
+        <layout>Contact-Contact Layout</layout>
+    </layoutAssignments>
+    
+    <layoutAssignments>
+        <layout>Contact-Customer Contact Layout</layout>
+        <recordType>Contact.Customer</recordType>
+    </layoutAssignments>
+    
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Account</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Contact</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    
+    <pageAccesses>
+        <apexPage>TestPage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    
+    <tabVisibilities>
+        <tab>standard-Account</tab>
+        <visibility>Visible</visibility>
+    </tabVisibilities>
+    
+    <tabVisibilities>
+        <tab>standard-Contact</tab>
+        <visibility>Visible</visibility>
+    </tabVisibilities>
+    
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewSetup</name>
+    </userPermissions>
+    
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ModifyAllData</name>
+    </userPermissions>
+</Profile>

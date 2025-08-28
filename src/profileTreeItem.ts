@@ -1,42 +1,61 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 
 export class ProfileTreeItem extends vscode.TreeItem {
   constructor(
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly type: 'profile' | 'profile-item' | 'profile-group',
-    public readonly filePath?: string,
+    public readonly type: 'profile' | 'profile-item' | 'profile-group' | 'layout-object-group' | 'layout-recordtype-group' | 'loading',
+    public readonly filePath: string,
+    public readonly profileName: string,
     public readonly tagName?: string,
     public readonly itemCount?: number,
-    public readonly context?: { objectName?: string; recordTypeName?: string }
+    public readonly context?: { [key: string]: any }
   ) {
     super(label, collapsibleState);
 
     this.contextValue = type;
-    
-    // Set appropriate icons based on type
-    if (type === 'profile') {
-      this.iconPath = new vscode.ThemeIcon('file');
-      this.tooltip = `Profile: ${label}`;
-    } else if (type === 'profile-group') {
-      this.iconPath = new vscode.ThemeIcon('symbol-folder');
-      this.tooltip = `${label} (${itemCount} items)`;
-    } else if (type === 'profile-item') {
-      this.iconPath = new vscode.ThemeIcon('symbol-field');
-      this.tooltip = `${tagName}: ${label}`;
-    }
+    this.tooltip = this.createTooltip();
+    this.iconPath = this.getIcon();
 
     // Set command for opening files
-    if (filePath) {
+    if (this.filePath && (this.type === 'profile' || this.type === 'profile-item')) {
       this.command = {
-        command: type === 'profile' ? 'profile.open' : 'profile-item.open',
+        command: this.type === 'profile' ? 'profile.open' : 'profile-item.open',
         title: 'Open',
         arguments: [this]
       };
     }
   }
+
+  private createTooltip(): string {
+    let tooltip = `Type: ${this.type}\nLabel: ${this.label}`;
+    if (this.itemCount) {
+        tooltip += ` (${this.itemCount} items)`;
+    }
+    if (this.tagName) {
+        tooltip += `\nTag: ${this.tagName}`;
+    }
+    return tooltip;
+  }
+
+  private getIcon(): vscode.ThemeIcon {
+    switch (this.type) {
+      case 'profile':
+        return new vscode.ThemeIcon('account');
+      case 'profile-group':
+      case 'layout-object-group':
+      case 'layout-recordtype-group':
+        return new vscode.ThemeIcon('symbol-folder');
+      case 'profile-item':
+        return new vscode.ThemeIcon('symbol-field');
+      case 'loading':
+        return new vscode.ThemeIcon('loading');
+      default:
+        return new vscode.ThemeIcon('symbol-misc');
+    }
+  }
+
+  public getProfileName(): string {
+    return this.profileName;
+  }
 }
-
-
-

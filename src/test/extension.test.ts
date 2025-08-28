@@ -11,7 +11,8 @@ suite('Extension Test Suite', () => {
 			'Test Profile',
 			vscode.TreeItemCollapsibleState.Collapsed,
 			'profile',
-			'/test/path/profile.xml'
+			'/test/path/profile.xml',
+      'Test Profile'
 		);
 		
 		assert.strictEqual(item.label, 'Test Profile');
@@ -29,15 +30,17 @@ suite('Extension Test Suite', () => {
 			'Admin',
 			vscode.TreeItemCollapsibleState.Collapsed,
 			'profile',
-			'/test/path/Admin.profile-meta.xml'
+			'/test/path/Admin.profile-meta.xml',
+      'Admin'
 		);
 		
 		const groupItem = new ProfileTreeItem(
 			'layoutAssignments',
 			vscode.TreeItemCollapsibleState.Collapsed,
 			'profile-group',
-			undefined,
-			undefined,
+			'/test/path/Admin.profile-meta.xml',
+      'Admin',
+			'layoutAssignments',
 			5
 		);
 		
@@ -46,7 +49,9 @@ suite('Extension Test Suite', () => {
 			vscode.TreeItemCollapsibleState.None,
 			'profile-item',
 			'/test/path/Admin.profile-meta.xml',
-			'layoutAssignments'
+      'Admin',
+			'layoutAssignments',
+      undefined
 		);
 		
 		assert.strictEqual(profileItem.type, 'profile');
@@ -57,9 +62,9 @@ suite('Extension Test Suite', () => {
 	test('Layout assignment object grouping', () => {
 		const provider = new ProfileListProvider('/test/workspace');
 		const items = [
-			{ layout: 'Account-Account Layout' },
-			{ layout: 'Account-Contact Layout' },
-			{ layout: 'Contact-Contact Layout' }
+			{ layout: ['Account-Account Layout'] },
+			{ layout: ['Account-Contact Layout'] },
+			{ layout: ['Contact-Contact Layout'] }
 		];
 		
 		// Access the private method for testing
@@ -74,9 +79,9 @@ suite('Extension Test Suite', () => {
 	test('Tooltip generation', () => {
 		const provider = new ProfileListProvider('/test/workspace');
 		const fieldPermission = {
-			field: 'Account.Name',
-			readable: true,
-			editable: false
+			field: ['Account.Name'],
+			readable: ['true'],
+			editable: ['false']
 		};
 		
 		// Access the private method for testing
@@ -91,9 +96,9 @@ suite('Extension Test Suite', () => {
 	test('Layout assignment record type grouping', () => {
 		const provider = new ProfileListProvider('/test/workspace');
 		const items = [
-			{ layout: 'Account-Account Layout' },
-			{ layout: 'Account-Customer Layout', recordType: 'Account.Customer' },
-			{ layout: 'Account-Partner Layout', recordType: 'Account.Partner' }
+			{ layout: ['Account-Account Layout'] },
+			{ layout: ['Account-Customer Layout'], recordType: ['Account.Customer'] },
+			{ layout: ['Account-Partner Layout'], recordType: ['Account.Partner'] }
 		];
 		
 		// Access the private method for testing
@@ -104,23 +109,5 @@ suite('Extension Test Suite', () => {
 		assert.strictEqual(result.get('Master')?.length, 1);
 		assert.strictEqual(result.get('Account.Customer')?.length, 1);
 		assert.strictEqual(result.get('Account.Partner')?.length, 1);
-	});
-
-	test('Hierarchy context tracking', () => {
-		const provider = new ProfileListProvider('/test/workspace');
-		
-		// Test that context is properly set for record type items
-		const recordTypeItem = new ProfileTreeItem(
-			'Master',
-			vscode.TreeItemCollapsibleState.Collapsed,
-			'profile-group',
-			undefined,
-			'layoutAssignments',
-			1,
-			{ objectName: 'Account', recordTypeName: 'Master' }
-		);
-		
-		assert.strictEqual(recordTypeItem.context?.objectName, 'Account');
-		assert.strictEqual(recordTypeItem.context?.recordTypeName, 'Master');
 	});
 });

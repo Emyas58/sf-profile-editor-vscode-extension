@@ -29,6 +29,9 @@ export function activate(context: vscode.ExtensionContext): void {
           vscode.window.showTextDocument(doc);
         });
       }
+    }),
+    vscode.commands.registerCommand("profile-item.edit", (item: ProfileTreeItem) => {
+      profileListProvider.editItem(item);
     })
   );
   

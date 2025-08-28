@@ -47,6 +47,10 @@
       {
         "command": "profile-item.open",
         "title": "Open Profile Item"
+      },
+      {
+        "command": "profile-item.edit",
+        "title": "Edit Item"
       }
     ],
     "menus": {
@@ -67,6 +71,11 @@
           "command": "profile-item.open",
           "when": "viewItem == profile-item",
           "group": "inline"
+        },
+        {
+          "command": "profile-item.edit",
+          "when": "viewItem == profile-item",
+          "group": "navigation"
         }
       ]
     }
